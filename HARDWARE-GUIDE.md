@@ -44,7 +44,7 @@ Colab free ngắt phiên khá thường xuyên và giới hạn khoảng 4 giờ
 1. **Bật Internet.** Trong panel **Settings** bên phải, gạt **Internet → On**. Kaggle mặc định **TẮT**;
    không bật thì cell `pip install` và mọi bước tải mô hình/dữ liệu đều lỗi ngay. (Cần tài khoản đã
    xác minh số điện thoại.)
-2. **Chọn Accelerator = GPU T4 ×2.** Lab chỉ dùng một GPU, GPU thứ hai để không.
+2. **Chọn Accelerator = GPU T4 ×2.** Notebook tự đặt `CUDA_VISIBLE_DEVICES=0` nên chỉ một GPU được dùng; GPU thứ hai để không.
 3. **Chạy `colab/Lab22_DPO_Kaggle.ipynb`**, không phải bản T4. Bản Kaggle ghi kết quả vào
    `/kaggle/working/lab22` — đây là chỗ duy nhất Kaggle giữ lại và cho tải về. Bản Colab ghi vào
    `/content/lab22`, mà Kaggle không có `/content`: notebook vẫn chạy nhưng **mọi kết quả sẽ mất**,

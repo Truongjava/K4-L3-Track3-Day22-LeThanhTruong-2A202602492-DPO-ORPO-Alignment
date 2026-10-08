@@ -248,6 +248,7 @@ Bản đầy đủ: [`rubric.md`](rubric.md).
 | Triệu chứng | Cách xử lý |
 |---|---|
 | Báo hết bộ nhớ GPU (`CUDA out of memory`) | Thêm dòng `os.environ["MAX_LEN"] = "512"` vào cell cài đặt đầu tiên, rồi chạy lại từ đầu. |
+| `Expected all tensors to be on the same device ... cuda:1 and cuda:0` | Kaggle T4×2: có **hai** GPU nên Unsloth đặt model ở `cuda:1` còn TRL đẩy batch sang `cuda:0`. Thêm `os.environ["CUDA_VISIBLE_DEVICES"] = "0"` vào **cell cài đặt đầu tiên** rồi khởi động lại phiên — phải đặt trước khi `torch` được import, nên sửa giữa chừng không có tác dụng. Bản notebook mới đã có sẵn dòng này. |
 | NB3 chạy rất lâu | Bình thường (~40–60 phút). Nếu chỉ muốn thử luồng chạy, thêm `os.environ["PREF_TRAIN"] = "200"` vào cell cài đặt. |
 | Hết giờ GPU Colab | File trong phiên bị mất. Luôn tải kết quả về trước (mục 1); phiên mới phải chạy lại từ NB1. |
 | `my_dpo_loss` báo sai | So kết quả với dòng "Đáp số tham chiếu" mà notebook in ra; kiểm tra dấu trừ và hệ số β. |
