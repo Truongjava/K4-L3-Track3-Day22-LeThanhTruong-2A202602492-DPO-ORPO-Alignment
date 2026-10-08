@@ -27,14 +27,37 @@ Hai thời điểm bộ nhớ tăng vọt cần lưu ý:
 | Tài nguyên bạn có | Tier | Cách chạy |
 |---|---|---|
 | Colab T4 miễn phí | **T4** | `colab/Lab22_DPO_T4.ipynb` |
-| Kaggle T4×2 | T4 (dùng một GPU) | `colab/Lab22_DPO_T4.ipynb` |
+| Kaggle GPU T4×2 | T4 (dùng một GPU) | `colab/Lab22_DPO_Kaggle.ipynb` |
 | Colab Pro L4 / A100 | **BigGPU** | `colab/Lab22_DPO_BigGPU.ipynb` |
 | GPU laptop 12–23 GB | T4 | `setup-laptop.sh` + `make pipeline` |
 | GPU ≥ 24 GB | BigGPU | `COMPUTE_TIER=BIGGPU make pipeline` |
-| Không có GPU | — | NB0 chạy trên CPU; các phần còn lại cần GPU (dùng Colab) |
+| Không có GPU | — | NB0 chạy trên CPU; các phần còn lại cần GPU (dùng Colab/Kaggle) |
 
 Nếu hết bộ nhớ GPU (OOM): giảm `MAX_LEN` (768 → 512), sau đó tăng `gradient_accumulation_steps` trong
 `lab22/config.py`, cuối cùng mới hạ tier.
+
+### Kaggle
+
+Colab free ngắt phiên khá thường xuyên và giới hạn khoảng 4 giờ. Kaggle cho **12 giờ mỗi phiên** và
+**30 giờ GPU mỗi tuần**, nên hợp với lab này hơn (phần bắt buộc ~2–3,5 giờ). Ba điều phải làm đúng:
+
+1. **Bật Internet.** Trong panel **Settings** bên phải, gạt **Internet → On**. Kaggle mặc định **TẮT**;
+   không bật thì cell `pip install` và mọi bước tải mô hình/dữ liệu đều lỗi ngay. (Cần tài khoản đã
+   xác minh số điện thoại.)
+2. **Chọn Accelerator = GPU T4 ×2.** Lab chỉ dùng một GPU, GPU thứ hai để không.
+3. **Chạy `colab/Lab22_DPO_Kaggle.ipynb`**, không phải bản T4. Bản Kaggle ghi kết quả vào
+   `/kaggle/working/lab22` — đây là chỗ duy nhất Kaggle giữ lại và cho tải về. Bản Colab ghi vào
+   `/content/lab22`, mà Kaggle không có `/content`: notebook vẫn chạy nhưng **mọi kết quả sẽ mất**,
+   không tải về được.
+
+Nạp notebook: **Code → New Notebook → File → Import Notebook → GitHub**, dán URL file
+`colab/Lab22_DPO_Kaggle.ipynb` trong repo của bạn.
+
+Cách lấy kết quả: mọi thứ trong `/kaggle/working/lab22` hiện ở panel **Output** sau khi lưu phiên
+(**Save Version**) — hoặc nén lại rồi tải như hướng dẫn trong README §1.
+
+Đĩa: `/kaggle/working` giới hạn khoảng 20 GB, còn cache Hugging Face nằm ở `/root/.cache` (ngoài đó) nên
+không tính vào hạn mức này. Mô hình SFT đã gộp (~8 GB) có nằm trong `/kaggle/working`, vẫn vừa.
 
 ## 3. Ổ đĩa
 

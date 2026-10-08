@@ -67,6 +67,10 @@ Việt để huấn luyện và 100 cặp để kiểm tra.
 
 Muốn chạy trên laptop/máy chủ có GPU ≥ 12 GB, hoặc dùng A100/L4: xem [`docs/reference.md`](docs/reference.md).
 
+**Colab hay ngắt phiên?** Dùng [`colab/Lab22_DPO_Kaggle.ipynb`](colab/Lab22_DPO_Kaggle.ipynb) trên Kaggle
+(12 giờ/phiên, 30 giờ GPU/tuần — nhớ **bật Internet** và chọn accelerator **GPU T4 ×2**). Hướng dẫn đầy đủ
+ở [HARDWARE-GUIDE §2](HARDWARE-GUIDE.md).
+
 ---
 
 ## 2. Từng bước một
