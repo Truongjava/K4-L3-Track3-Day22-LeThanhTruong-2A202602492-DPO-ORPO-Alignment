@@ -59,8 +59,11 @@ print(f"sum log p = {total.item():.3f}   mean log p = {mean.item():.3f}")
 # %%
 def my_dpo_loss(pc, pr, rc, rr, beta=0.1):
     """pc/pr: policy log-prob chosen/rejected; rc/rr: reference. Trả về loss trung bình."""
-    # TODO: viết bằng torch.nn.functional.logsigmoid
-    return None
+    # Reward ngầm của mỗi câu: β · log(π_θ / π_ref), tức β · (log-prob policy − log-prob reference).
+    chosen = beta * (pc - rc)
+    rejected = beta * (pr - rr)
+    # Loss = −log σ(margin). Lúc khởi tạo policy = reference nên margin = 0 ⇒ loss = log 2.
+    return -torch.nn.functional.logsigmoid(chosen - rejected).mean()
 
 
 # %%

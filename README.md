@@ -49,10 +49,19 @@ Việt để huấn luyện và 100 cặp để kiểm tra.
    Nếu gặp lỗi không có GPU, quay lại bước 2.
 
 > **Quan trọng — Colab xoá mọi file khi hết phiên.** Trước khi đóng tab hoặc hết giờ GPU, mở bảng **Tệp**
-> (biểu tượng thư mục bên trái), vào `/content/lab22` và tải về máy:
-> - thư mục `submission/screenshots/` (các ảnh biểu đồ),
-> - thư mục `data/eval/` (kết quả chấm),
-> - các file `.json` trong `adapters/dpo/` (số liệu huấn luyện; **không** cần tải file trọng số `.safetensors`).
+> (biểu tượng thư mục bên trái), vào `/content/lab22` và tải về máy **đúng các mục sau**. Đây là danh sách
+> `make verify` kiểm tra, thiếu mục nào là mất điểm mục đó:
+>
+> | Tải về | Gồm những gì | Để làm gì |
+> |---|---|---|
+> | `submission/screenshots/` | 4 ảnh `02-sft-loss.png`, `02b-pref-length.png`, `03-dpo-reward-curves.png`, `04-side-by-side-table.png` | bằng chứng biểu đồ |
+> | `data/eval/` | `side_by_side.jsonl`, `judge_summary.json` | kết quả chấm NB4 |
+> | `data/pref/` | `train.parquet`, `eval.parquet`, `stats.json` | **bắt buộc**: NB3 lưu dấu vân tay của hai file này vào `adapters/dpo/split.json`; nếu bạn đưa bộ parquet khác vào, `make verify` báo `SPLIT` |
+> | `adapters/dpo/` | `adapter_config.json`, `dpo_metrics.json`, `split.json` | số liệu huấn luyện (**không** cần trọng số `.safetensors`) |
+> | `adapters/sft-mini/adapter_config.json` | 1 file | NB1 |
+> | `models/sft-merged/config.json` | **chỉ 1 file này**, không cần trọng số | NB1; `make verify` chỉ kiểm tra file này tồn tại |
+>
+> Trọng số mô hình (`*.safetensors`) không cần tải và không nên commit — `.gitignore` đã chặn.
 >
 > Nếu mất phiên giữa chừng, bạn phải chạy lại từ NB1.
 
@@ -187,8 +196,12 @@ Các mục bonus (§5, §7–§9) chỉ cần điền nếu bạn làm phần t�
    - các notebook NB0–NB4 **còn giữ output** (hoặc file Colab đã chạy xong),
    - các ảnh trong `submission/screenshots/`: `02-sft-loss.png`, `02b-pref-length.png`,
      `03-dpo-reward-curves.png`, `04-side-by-side-table.png`,
-   - các file kết quả đã tải về ở mục 1 (`data/eval/`, các file `.json` của `adapters/dpo/`),
+   - các file kết quả đã tải về ở mục 1: `data/eval/`, `data/pref/*.parquet`,
+     `adapters/dpo/*.json`, `adapters/sft-mini/adapter_config.json`,
    - `submission/REFLECTION.md` đã điền.
+
+   `.gitignore` đã mở sẵn cho đúng những file này (`git status` phải thấy chúng); nếu một file bằng chứng
+   không hiện ra, kiểm tra lại đường dẫn trước khi nộp.
 3. Nếu chạy trên máy riêng, chạy `make verify` để tự kiểm tra; lệnh phải kết thúc không lỗi.
 4. Nộp đường dẫn repo vào LMS. Giữ repo public đến khi có điểm.
 
