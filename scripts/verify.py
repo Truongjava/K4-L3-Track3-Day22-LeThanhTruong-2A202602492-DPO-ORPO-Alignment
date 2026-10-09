@@ -14,7 +14,7 @@ import hashlib
 import json
 import re
 import sys
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 
 REPO = Path(__file__).resolve().parent.parent
 NOTEBOOKS = [
@@ -57,11 +57,17 @@ def check_dpo(problems: list[str], warnings: list[str]) -> None:
     if not need(adapter / "adapter_config.json", "DPO adapter (NB3)", problems):
         return
     base = str((read_json(adapter / "adapter_config.json", problems) or {}).get("base_model_name_or_path", ""))
-    expected = (REPO / "models" / "sft-merged").resolve()
-    if not base or Path(base).resolve() != expected:
+    expected = (REPO / "models" / "sft-merged")
+    # PEFT records the absolute path the adapter was trained under, which is
+    # /content/lab22 or /kaggle/working/lab22 for the Colab/Kaggle workflow the
+    # README recommends. Comparing resolved paths therefore rejected every such
+    # run on the machine the artifacts were downloaded to. What the check is for
+    # is catching a reference that is the raw base model, so compare the
+    # reference's identity (.../models/sft-merged), not the disk it lived on.
+    if not base or PurePosixPath(base.replace("\\", "/")).parts[-2:] != ("models", "sft-merged"):
         problems.append(
             f"WRONG REF  adapters/dpo was trained on {base!r}, not {rel(expected)}: the DPO reference "
-            "must be this repo's SFT model (if the repo moved, rerun NB3 here)."
+            "must be the lab's SFT model, not the base model (retrain with NB3 if you trained elsewhere)."
         )
     sys.path.insert(0, str(REPO))
     from lab22.data import split_mismatch
