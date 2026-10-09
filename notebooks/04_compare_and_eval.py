@@ -158,6 +158,19 @@ plt.show()
 # `side_by_side.jsonl` (sinh greedy nên thường trùng giữa các lần chạy).
 
 # %%
+import gc
+
+# A reward model is loaded at full precision, so a 4B judge asks for one ~7.4 GiB
+# contiguous block out of the T4's 14.6 GiB. Anything still resident from an
+# earlier stage makes that fail with an OutOfMemoryError. Do not rely on the
+# RELEASE_GPU cells for this: they sit next to the bonus stages, so skipping
+# NB3b skips the cleanup that would have dropped NB3's trainer (and its model).
+for _stale in ("trainer", "model", "ref_model", "result", "final_eval"):
+    globals().pop(_stale, None)
+gc.collect()
+torch.cuda.empty_cache()
+print(f"GPU in use before judging: {torch.cuda.memory_allocated() / 2**30:.2f} GiB")
+
 provider = C.JUDGE_PROVIDER
 if provider != "rm" and not J.has_judge_key(provider):
     print(f"JUDGE_PROVIDER={provider} but its API key is missing → local reward-model panel.")

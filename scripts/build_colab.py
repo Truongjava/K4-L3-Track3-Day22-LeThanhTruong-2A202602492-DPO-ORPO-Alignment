@@ -136,6 +136,9 @@ def render(tier: str) -> dict:
             "# forward pass with 'found at least two devices'. Must be set before torch is\n"
             "# imported. Setdefault, so an explicit CUDA_VISIBLE_DEVICES still wins.\n"
             'os.environ.setdefault("CUDA_VISIBLE_DEVICES", "0")\n'
+            "# NB4's reward-model judge loads at full precision and asks for one large\n"
+            "# contiguous block; the T4's 14.6 GiB fragments easily after training.\n"
+            'os.environ.setdefault("PYTORCH_CUDA_ALLOC_CONF", "expandable_segments:True")\n'
             "# NB4 judges automatically with a panel of two local reward models (no key needed).\n"
             "# Optional API judge as a cross-check (two A/B orders):\n"
             '# os.environ["JUDGE_PROVIDER"] = "gemini"   # or "openai" / "anthropic"\n'
