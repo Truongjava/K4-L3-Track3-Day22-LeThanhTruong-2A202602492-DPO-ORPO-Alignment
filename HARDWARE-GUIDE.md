@@ -45,13 +45,23 @@ Colab free ngắt phiên khá thường xuyên và giới hạn khoảng 4 giờ
    không bật thì cell `pip install` và mọi bước tải mô hình/dữ liệu đều lỗi ngay. (Cần tài khoản đã
    xác minh số điện thoại.)
 2. **Chọn Accelerator = GPU T4 ×2.** Notebook tự đặt `CUDA_VISIBLE_DEVICES=0` nên chỉ một GPU được dùng; GPU thứ hai để không.
-3. **Chạy `colab/Lab22_DPO_Kaggle.ipynb`**, không phải bản T4. Bản Kaggle ghi kết quả vào
-   `/kaggle/working/lab22` — đây là chỗ duy nhất Kaggle giữ lại và cho tải về. Bản Colab ghi vào
-   `/content/lab22`, mà Kaggle không có `/content`: notebook vẫn chạy nhưng **mọi kết quả sẽ mất**,
-   không tải về được.
+3. **Chạy đúng notebook.** Bản Kaggle ghi kết quả vào `/kaggle/working/lab22` — đây là chỗ duy nhất
+   Kaggle giữ lại và cho tải về. Bản Colab ghi vào `/content/lab22`, mà Kaggle không có `/content`:
+   notebook vẫn chạy nhưng **mọi kết quả sẽ mất**, không tải về được. Chọn theo cách bạn chạy:
 
-Nạp notebook: **Code → New Notebook → File → Import Notebook → GitHub**, dán URL file
-`colab/Lab22_DPO_Kaggle.ipynb` trong repo của bạn.
+   | Notebook | Nội dung | Dùng khi |
+   |---|---|---|
+   | `colab/Lab22_DPO_Kaggle_Core.ipynb` | NB0 → NB4, **không có bonus** | **Chạy tất cả / Save & Run All** |
+   | `colab/Lab22_DPO_Kaggle.ipynb` | NB0 → NB7 | Chạy từng cell, có làm bonus |
+
+   **Vì sao phải phân biệt:** "Save & Run All" chạy **mọi** cell, không bỏ qua cell nào. Dùng bản đầy đủ
+   là nó cố chạy luôn NB3b, NB5, NB6, NB7 — thêm 5–10 giờ và gần như chắc chắn đứt phiên. Bản Core không
+   chứa các stage đó nên không thể lạc.
+
+Nạp notebook: **Code → New Notebook → File → Import Notebook → GitHub**, dán URL file bạn chọn trong repo.
+
+Cell **cuối cùng** của mọi bundle gom đủ 15 file bằng chứng vào một thư mục và nén thành zip, đồng thời
+in ra file nào thiếu — chạy nó trước khi kết thúc phiên.
 
 Cách lấy kết quả: mọi thứ trong `/kaggle/working/lab22` hiện ở panel **Output** sau khi lưu phiên
 (**Save Version**) — hoặc nén lại rồi tải như hướng dẫn trong README §1.
