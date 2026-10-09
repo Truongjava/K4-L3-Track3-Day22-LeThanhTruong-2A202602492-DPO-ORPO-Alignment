@@ -55,3 +55,6 @@ hf_cache/
 .idea/
 .vscode/
 *.swp
+
+# Downloaded submission bundle (the artifacts inside it are committed directly)
+lab22_submission*.zip
