@@ -234,10 +234,11 @@ trên bộ dữ liệu này._
 
 | | Giá trị |
 |---|---:|
-| Độ chính xác trước / sau (n câu kiểm tra) | _<... / ... (n=...)>_ |
-| Sai số chuẩn ≈ √(p(1−p)/n) | _<...>_ |
+| Độ chính xác trước / sau (n câu kiểm tra) | *không chạy* |
+| Sai số chuẩn ≈ √(p(1−p)/n) | *không chạy* |
 
-_Không chạy (bonus)._
+_Không chạy (bonus). NB7 cần `vuongtsc/vi-gsm8k-agentic` và sinh nhiều câu trả lời cho mỗi bài, tốn
+thêm 1–3 giờ; tôi ưu tiên dành ngân sách phiên Kaggle cho phần bắt buộc._
 
 ---
 
